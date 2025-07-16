@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct Question {
     int id;
@@ -25,7 +26,7 @@ Stack* createStack(int capacity) {
     stack -> top = -1;
     return stack;
 }
-Queue createQueue(int capacity) {
+Queue* createQueue(int capacity) {
     Queue* queue = (Queue*)malloc(sizeof(Queue));
     queue -> capacity = capacity;
     queue -> front = 0;
@@ -40,6 +41,14 @@ void push(Stack* stack, Question question) {
     stack -> top++;
     stack -> questions[stack -> top] = question;
 }
+Question pop(Stack* stack) {
+    if (stack -> top == -1) {
+        printf("Stack rong\n");
+        return;
+    }
+    stack -> top--;
+    return stack -> questions[stack -> top];
+}
 void enqueue(Queue* queue, Question question) {
     if (queue -> rear == queue -> capacity - 1) {
         printf("Queue da day\n");
@@ -50,19 +59,25 @@ void enqueue(Queue* queue, Question question) {
 }
 void displayQueue(Queue* queue) {
     if (queue -> rear == queue -> capacity - 1) {
-        printf("Queue is empty\n");
+        printf("Queue rong\n");
         return;
     }
-    for (int i = 0; i <= queue -> rear; i++) {
+    for (int i = queue -> front; i <= queue -> rear; i++) {
         printf("%d ", queue -> questions[i].id);
         printf("%s ", queue -> questions[i].content);
     }
 }
+int isEmpty(Stack* stack) {
+    if (stack -> top == -1) {
+        return 1;
+    }
+    return 0;
+}
 int main() {
     int choice;
-    Stack* practiceStack = createStack();
-    Stack* redoStack = createStack();
-    Queue fullHistory = createQueue();
+    Stack* practiceStack = createStack(10);
+    Stack* redoStack = createStack(10);
+    Queue* fullHistory = createQueue(10);
     do {
         printf("\n-----INTERVIEW MANAGER-----\n");
         printf("1. Practice\n");
@@ -77,8 +92,14 @@ int main() {
                 Question question;
                 printf("Nhap ID cho cau hoi: ");
                 scanf("%d", question.id);
-
+                getchar();
                 printf("nhap content: ");
+                fgets(question.content, sizeof(question.content), stdin);
+                question.content[strcspn(question.content, "\n")] = '\0';
+                push(practiceStack, question);
+                enqueue(fullHistory, question);
+                redoStack = createStack(10);
+                break;
                 break;
             case 2:
                 break;
