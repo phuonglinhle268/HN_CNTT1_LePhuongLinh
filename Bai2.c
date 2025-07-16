@@ -78,6 +78,7 @@ int main() {
                 printf("Nhap ID cho cau hoi: ");
                 scanf("%d", question.id);
 
+                printf("nhap content: ");
                 break;
             case 2:
                 break;
