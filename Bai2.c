@@ -48,6 +48,16 @@ void enqueue(Queue* queue, Question question) {
     queue -> rear++;
     queue -> questions[queue -> rear] = question;
 }
+void displayQueue(Queue* queue) {
+    if (queue -> rear == queue -> capacity - 1) {
+        printf("Queue is empty\n");
+        return;
+    }
+    for (int i = 0; i <= queue -> rear; i++) {
+        printf("%d ", queue -> questions[i].id);
+        printf("%s ", queue -> questions[i].content);
+    }
+}
 int main() {
     int choice;
     Stack* practiceStack = createStack();
@@ -67,7 +77,7 @@ int main() {
                 Question question;
                 printf("Nhap ID cho cau hoi: ");
                 scanf("%d", question.id);
-                
+
                 break;
             case 2:
                 break;
