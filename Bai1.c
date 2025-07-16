@@ -33,7 +33,7 @@ void add() {
     printf("Nhap ma cho cau hoi: ");
     scanf("%d", &newNode -> data.id);
     getchar();
-    printf("Nhap noi dung cau hoi: ");
+    printf("Nhap noi dung: ");
     fgets(newNode -> data.content, 100, stdin);
     newNode -> data.content[strcspn(newNode -> data.content, "\n")] = '\0';
     printf("Nhap chu de: ");
